@@ -1,0 +1,35 @@
+---
+title: "Week 3 Assignment"
+date: "20/5/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Housing Sales In TX
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+suppressPackageStartupMessages({library(plotly)})
+library(plotly)
+top5 <- txhousing %>% 
+    group_by(city) %>%
+    summarize(m = mean(sales, na.rm = TRUE)) %>%
+    arrange(desc(m)) %>%
+    top_n(5)
+
+tx5 <- semi_join(txhousing, top5, by="city")
+
+plot_ly(tx5, x=~date, y=~sales, color = ~city, type="scatter", mode="lines")
+```
+
+
+# Thanks
+
+
+
+
+
